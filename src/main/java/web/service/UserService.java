@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import web.model.dto.UserDto;
 import web.model.entity.UserEntity;
 import web.model.repository.UserEntityRepository;
+import web.util.JwtUtil;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 @Transactional //트랜잭션 : 여러개의 SQL 하나의 논리단위
 public class UserService {
     private final UserEntityRepository userEntityRepository;
+    private final JwtUtil jwtUtil;
 
 
     //1.로그인
