@@ -52,16 +52,40 @@ public class UserController {
 
     //4.회원수정
 
-    @PutMapping("/update") // http://localhost:8080/user/update
+    public ResponseEntity<UserDto> userUpdate(
+            @RequestBody UserDto userDto,
+            @RequestHeader("Authorization") String token){
+        UserDto updatedUser = userService.userUpdate(userDto, token);
+        if(updatedUser != null){
+            return ResponseEntity.status(200).body(updatedUser); // 수정 성공
+        } else {
+            return ResponseEntity.status(400).body(null); // 수정 실패
+        }
+    }
 
-    public UserDto
 
 
-
-//
-//    //5.사용자프로필 조회(인증권한 토큰기반)
-//    @GetMapping("/info") //http://localhost:8080/user/info // headers: {'Authorization' : '토큰' }
-//    public ResponseEntity<UserDto>info(@RequestHeader("Authorization")String token) {System.out.println(token);}
+//    @GetMapping("/view")
+//    public ResponseEntity<ProductDto>viewProducts(@RequestParam long pno){ //required 생략시 pno 필수
+//        ProductDto productDto = productService.viewProduct(pno);
+//        if(productDto == null){
+//            return ResponseEntity.status(404).body(null); //404 not found 와 null 반환
+//        }else {
+//            return ResponseEntity.status(200).body(productDto); // 200과 값 반환
+//        }
+//    }
+   //5.사용자프로필 조회(인증권한 토큰기반) : 설계 : ?id=(토큰)
+    @GetMapping("/info") //http://localhost:8080/user/info // headers: {'Authorization' : '토큰' }
+    public ResponseEntity<UserDto>viewUser(
+            @RequestParam int id,
+            @RequestHeader("Authorization")String token) {
+        UserDto userDto = userService.viewUser(id,token);
+        if(userDto == null){
+            return ResponseEntity.status(404).body(null);
+        }else {
+            return ResponseEntity.status(200).body(userDto);
+        }
+        }// f end
 
 
 }

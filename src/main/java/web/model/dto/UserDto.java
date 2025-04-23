@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import web.model.entity.UserEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,11 +16,33 @@ import lombok.NoArgsConstructor;
 
 public class UserDto {
 
-    private String id;    // 유저 아이디
+    private int id;    // 유저 아이디 (pk) 로 구분
     private String uname;// 유저 이름
     private String email; // 유저 이메일
     private String pw;   // 유저 비밀번호
-    private int point_balance;  //잔여 포인트
+    private int pointBalance;  //잔여 포인트
+
+    //유저 조회할때 필요한 필드(미구현)
+
+
+    // dto-> entity로 변환
+    public UserEntity toEntity(){
+        return UserEntity.builder()
+                .id(id)
+                .uname(uname)
+                .email(email)
+                .pw(pw)
+                .pointBalance(pointBalance)
+                .build();
+    }
+
+    //*toDto : 유저 전체 조회 , 유저 조회 사용
+    public static UserDto toDto(UserEntity userEntity){
+        return UserDto.builder()
+                .email(userEntity.getEmail())
+                .uname(userEntity.getUname())
+                .build();
+    }
 
 
 }

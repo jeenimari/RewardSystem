@@ -17,7 +17,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//기본키
-    private String id; // Pk 설정
+    private int id; // Pk 설정
 
     @Column(unique = true,nullable = false) // 유저 이름 유니크
     private String uname;// 유저 이름
@@ -29,6 +29,6 @@ public class UserEntity {
     private String pw;   // 유저 비밀번호
 
     @ColumnDefault("0")
-    private int point_balance;  //잔여 포인트
+    private int pointBalance;  //잔여 포인트
 
 }
