@@ -53,7 +53,7 @@ public class UserService {
         //해당 토큰이메일 조회
         String email = jwtUtil.validateToken(token);
         //조회된 이메일 레디스 토큰 삭제
-        jwtUtil.deleteToken(eamil);
+        jwtUtil.deleteToken(email);
     }
 
 

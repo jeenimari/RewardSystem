@@ -51,7 +51,7 @@ public class UserController {
 
 
     //4.회원수정
-
+@PutMapping("/update")
     public ResponseEntity<UserDto> userUpdate(
             @RequestBody UserDto userDto,
             @RequestHeader("Authorization") String token){
