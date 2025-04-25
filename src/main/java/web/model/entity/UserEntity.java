@@ -29,6 +29,12 @@ public class UserEntity {
     private String pw;   // 유저 비밀번호
 
     @ColumnDefault("0")
+    @Column(name = "pointBalance")
     private int pointBalance;  //잔여 포인트
+
+    // 역할 필드
+    @Column(length = 10)
+    private String role; // "ADMIN" 또는 "USER" 값을 가질 수 있음
+
 
 }

@@ -27,21 +27,29 @@ public class ChallengeDto {
 
     public static ChallengeDto fromEntity(ChallengeEntity challengeEntity){
         return ChallengeDto.builder()
-                .cno(challengeEntity.getcno)
-                .content(challengeEntity.getcontent)
-                .type(challengeEntity.getType)
+                .cno(challengeEntity.getCno())
+                .content(challengeEntity.getContent())
+                .type(challengeEntity.getType().name())
                 .rewardPoints(challengeEntity.getRewardPoints())
-                .status(challengeEntity.getstatus())
+                .status(challengeEntity.getStatus().name())
                 .build();
     }
 
 
-//    //DTO -> 엔티티 변환 메서드
-//    public ChallengeEntity toEntity(){
-//
-//        return ChallengeEntity.
-//    }
+    //DTO-> 엔티티 변환
 
+    public ChallengeEntity toEntity(){
+        return ChallengeEntity.builder()
+                .cno(cno)
+                .title(title)
+                .content(content)
+                .type(ChallengeEntity.ChallengeType.valueOf(type))
+                .rewardPoints(rewardPoints)
+                .status(status!=null ? ChallengeEntity.ChallengeStatus.valueOf(status):ChallengeEntity.ChallengeStatus.ACTIVE)
+                .build();
+    }
+
+    //dto -> 엔티티 변환
 
 
 

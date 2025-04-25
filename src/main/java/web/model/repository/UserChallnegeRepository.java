@@ -23,6 +23,6 @@ public interface UserChallnegeRepository extends JpaRepository<UserChallengeEnti
 
     //특정 사용자의 특정 상태의 챌린지 참여 정보조회
 
-    List<UserChallengeEntity>findByUserAndStatus(int userId,String status);
+    //List<UserChallengeEntity>findByUserAndStatus(int userId,String status);
 
 }

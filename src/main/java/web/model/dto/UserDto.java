@@ -35,6 +35,15 @@ public class UserDto {
                 .pointBalance(pointBalance)
                 .build();
     }
+    //  UserEntity를  UserDto로 변환하는 과정
+    public static UserDto fromEntity(UserEntity entity) {
+        return UserDto.builder()
+                .id(entity.getId())
+                .email(entity.getEmail())
+                .uname(entity.getUname())
+                .build();
+    }
+
 
     //*toDto : 유저 전체 조회 , 유저 조회 사용
     public static UserDto toDto(UserEntity userEntity){

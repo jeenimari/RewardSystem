@@ -20,6 +20,7 @@ public class UserService {
     private final UserEntityRepository userEntityRepository;
     private final JwtUtil jwtUtil;
 
+    private final StringRedisTemplate stringRedisTemplate;
 
     //1.로그인
 
@@ -40,7 +41,7 @@ public class UserService {
         String token = jwtUtil.createToken(userEntity.getEmail());
         System.out.println(">>>발급된 토큰 = " + token);
         //+레디스에 24시간만 저장되는 로그인 로그(기록) 하기
-        StringRedisTemplate.opsForValue().set(
+        stringRedisTemplate.opsForValue().set(
                 "RECENT_LOGIN:"+userDto.getEmail(),"true",1, TimeUnit.DAYS
         );
         return token;

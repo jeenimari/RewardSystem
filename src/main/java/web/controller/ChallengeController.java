@@ -45,7 +45,7 @@ public class ChallengeController {
         //1.토큰에서 로그인한 사용자 id 추출
         int loginId;
         try{
-            loginId = challengeService.info(token).getCno();
+            loginId = challengeService.info(token).getId();
         } catch (Exception e) {
             return ResponseEntity.status(401).body(false);
         }
@@ -68,7 +68,7 @@ public class ChallengeController {
         //1.토큰에서 로그인한 사용자 ID 추출
         int loginId;
         try {
-            loginId = challengeService.info(token).getCno();
+            loginId = challengeService.info(token).getId();
         }catch (Exception e){
             return ResponseEntity.status(401).body(null);
         }
@@ -93,7 +93,7 @@ public class ChallengeController {
         //1.현재 토큰의 작성자 구하기(id)
         int loginId;
         try{
-            loginId = challengeService.info(token).getCno();
+            loginId = challengeService.info(token).getId();
         } catch (Exception e) {
             return ResponseEntity.status(401).body(false); // 401 unatuhorized 와 false 반환
         }
