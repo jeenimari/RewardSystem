@@ -36,7 +36,7 @@ public class JwtUtil {
 
         //+ 중복 로그인 방지하고자 웹서버가 아닌 Redis에 토큰 저장
         //(1)Redis 에 토큰 저장
-        stringRedisTemplate.opsForValue().set("JWT"+email,token,24, TimeUnit.HOURS);
+        stringRedisTemplate.opsForValue().set("JWT:" + email, token, 24, TimeUnit.HOURS);
         //(2)레디스에 저장된 키들 확인
         System.out.println(stringRedisTemplate.keys("*"));
         //(3)Redis에 저장된 key값 ghkrdls
@@ -58,7 +58,7 @@ public class JwtUtil {
             //+중복 로그인 방지하고자 Redis 에서 최근 로그인된 토큰 확인
             String email = claims.getSubject(); // 현재 전달받은 토큰의 저장된 회원정보(이메일)
             //1.레디스에서 최신 토큰 가져오기
-            String redisToken = stringRedisTemplate.opsForValue().get("JWT:"+ email);
+            String redisToken = stringRedisTemplate.opsForValue().get("JWT:" + email);
             if(token.equals(redisToken)){return email;} //현재 로그인상태 정상(중복 로그인이 아님)
             //(3)만약에 두 토큰이 다르면 null이 리턴됨 (토큰 불일치 또는 중복 로그인 감지)
             else {

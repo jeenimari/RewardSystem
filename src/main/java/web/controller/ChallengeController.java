@@ -83,11 +83,11 @@ public class ChallengeController {
 
 
 
-    //5.챌린지 목록등록
+    //5.챌린지 목록등록  http://localhost:8080/challenge/register
     @PostMapping("/register")
     public ResponseEntity<Boolean>registerChallenge(
             @RequestHeader("Authorization")String token, //토큰받기
-            @ModelAttribute ChallengeDto challengeDto){
+            @RequestBody ChallengeDto challengeDto){
 
         System.out.println("token = " + token + ", challengeDto = " + challengeDto);
         //1.현재 토큰의 작성자 구하기(id)
