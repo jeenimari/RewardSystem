@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 
-public class ChallengeEntity {
+public class ChallengeEntity extends BaseTime {
 
 
 

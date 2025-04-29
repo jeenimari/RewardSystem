@@ -13,7 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 @AllArgsConstructor
 @Data
 @Builder
-public class UserEntity {
+public class UserEntity extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//기본키

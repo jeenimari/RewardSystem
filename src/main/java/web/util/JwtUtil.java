@@ -49,7 +49,7 @@ public class JwtUtil {
         try{
             Claims claims = Jwts.parser()
                     .setSigningKey(secretKey) // 검증하기 위한 비밀키 넣기
-                    .build()    //검즈일행 , 검증 실패시 예외 발생
+                    .build()    //검증실행 , 검증 실패시 예외 발생
                     .parseClaimsJws(token) // 검증할 토큰 해석 , 실패시 예외 발생
                     .getBody(); // 검증 된 claims 객체 생성
             //claims 안에 다양한 토큰번호 들어있음
