@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.dto.ReviewDto;
+import web.model.entity.ProductEntity;
 import web.model.entity.UserEntity;
+import web.model.repository.ProductEntityRepository;
 import web.model.repository.ReviewRepository;
 import web.model.repository.UserEntityRepository;
 
@@ -18,6 +20,9 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final UserEntityRepository userEntityRepository;
+    private final ProductEntityRepository productEntityRepository;
+    private final PointService pointService;
+
 
 
 
@@ -26,7 +31,7 @@ public class ReviewService {
     public ReviewDto createReview(ReviewDto reviewDto, String userId) {
 
         //1.리뷰의 제품이 등록하는 여부 확인
-        Optional<제품엔티티>optionalProduct(int){}
+        Optional<ProductEntity>optionalProduct(int){}
 
 
         //2.사용자 존재 여부 확인

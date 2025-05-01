@@ -100,7 +100,7 @@ public class ProductService {
      * 인기 제품 목록 (조회수 기준)
      */
     public List<ProductDto> getPopularProducts() {
-        return productEntityRepository.findTop10ByOrderByViewCountDesc().stream()
+        return productEntityRepository.findTop10().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -109,7 +109,7 @@ public class ProductService {
      * 최근 등록된 제품 목록
      */
     public List<ProductDto> getRecentProducts(int count) {
-        return productEntityRepository.findByOrderByCreatedAtDesc().stream()
+        return productEntityRepository.findCreated().stream()
                 .limit(count)
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
