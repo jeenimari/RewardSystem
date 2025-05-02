@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 import web.model.entity.ReviewEntity;
+
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,6 +40,9 @@ public class ReviewDto {
                 .rewarded(reviewEntity.getRewarded())
                 .build();
     }
+
+    // 파일 업로드를 위한 필드 추가
+    private List<MultipartFile> files;
 
 
     //DTo->엔티티 변환

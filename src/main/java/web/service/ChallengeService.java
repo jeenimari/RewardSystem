@@ -160,11 +160,11 @@ public class ChallengeService {
 
         }
         //이메일로 사용자 조회
-        UserEntity userEntity = userEntityRepository.findByEmail(email);
-        if(userEntity == null){
+        Optional<UserEntity> optionalUser = userEntityRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
             throw new RuntimeException("사용자를 찾을 수 없습니다.");
         }
-        return UserDto.fromEntity(userEntity);
+        return UserDto.fromEntity(optionalUser.get());
     }
 
 

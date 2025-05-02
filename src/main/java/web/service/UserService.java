@@ -25,13 +25,15 @@ public class UserService {
     //1.로그인
 
     public String login(UserDto userDto){
-        //1.아이디(이메일) DB에서 조회하여 엔티티찾기
-        UserEntity userEntity
-                = userEntityRepository.findByEmail(userDto.getEmail());
-        //조회된 엔티티 없으면?
-        if(userEntity == null){
-            return null;
-        }//로그인실패
+        // 아이디(이메일) DB에서 조회하여 엔티티 찾기 - Optional 처리
+        Optional<UserEntity> optionalUser = userEntityRepository.findByEmail(userDto.getEmail());
+
+        // 조회된 엔티티 없으면?
+        if (optionalUser.isEmpty()) {
+            return null; // 로그인 실패
+        }
+
+        UserEntity userEntity = optionalUser.get();
         //3.조회된 엔티티 비밀번호 검증
         BCryptPasswordEncoder passwordEncoder =new BCryptPasswordEncoder(); //비크립트객체생성
         boolean inMath = passwordEncoder.matches(userDto.getPw(),userEntity.getPw());
@@ -82,11 +84,13 @@ public class UserService {
         if(email == null){
             return null; //유효하지 않은 토큰
         }
-        //2.토큰의 이메일로 사용자 엔티티 조회
-        UserEntity userEntity = userEntityRepository.findByEmail(email);
-        if(userEntity == null){
+        // 2. 토큰의 이메일로 사용자 엔티티 조회 - Optional 처리
+        Optional<UserEntity> optionalUser = userEntityRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
             return null; // 사용자가 존재하지 않음
         }
+
+        UserEntity userEntity = optionalUser.get();
         //3.권한 검증(userDTo의 id와 조회한 엔티티의 id가 일치하는지)
         if(userDto.getId()!= userEntity.getId()){
             return null; //본인 정보만 수정가능
