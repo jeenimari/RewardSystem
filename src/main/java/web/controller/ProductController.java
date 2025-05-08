@@ -28,14 +28,8 @@ public class ProductController {
 
         String userId;
         try {
-            // "Bearer " 접두사 제거
-            String jwtToken = token;
-            if (token.startsWith("Bearer ")) {
-                jwtToken = token.substring(7);
-            }
-
             // 토큰 검증
-            String email = jwtUtil.validateToken(jwtToken);
+            String email = jwtUtil.validateToken(token);
             if(email == null){
                 return ResponseEntity.status(401).body(false); //인증 실패
             }

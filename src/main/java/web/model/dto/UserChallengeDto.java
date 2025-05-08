@@ -47,8 +47,8 @@ public class UserChallengeDto {
                 .id(id)
                 .userId(userId)
                 .challengeId(challengeId)
-                .completed(completed)
-                .rewarded(rewarded)
+                .completed(false)
+                .rewarded(false)
                 .status(status != null ?
                         UserChallengeEntity.ChallengeParticipationStatus.valueOf(status) :
                         UserChallengeEntity.ChallengeParticipationStatus.IN_PROGRESS)

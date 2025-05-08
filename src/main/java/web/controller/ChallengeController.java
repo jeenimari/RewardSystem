@@ -38,7 +38,7 @@ public class ChallengeController {
 
 
     //3.챌린지 참여기능
-    @PostMapping("/praticipate")
+    @PostMapping("/participate")
     public ResponseEntity<Boolean>participateChallenge(
             @RequestParam int cno,
             @RequestHeader("Authorization")String token){

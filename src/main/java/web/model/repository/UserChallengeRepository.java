@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserChallnegeRepository extends JpaRepository<UserChallengeEntity, Integer> {
+public interface UserChallengeRepository extends JpaRepository<UserChallengeEntity, Integer> {
 
     // 사용자별 챌린지 참여 조회
     List<UserChallengeEntity> findByUserId(int userId);

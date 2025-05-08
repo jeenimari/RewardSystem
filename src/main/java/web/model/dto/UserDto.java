@@ -31,6 +31,7 @@ public class UserDto {
                 .id(id)
                 .uname(uname)
                 .email(email)
+
                 .pw(pw)
                 .pointBalance(pointBalance)
                 .build();

@@ -70,6 +70,14 @@ public class UserService {
 
         //2.DTO를 entity로 변환하기
         UserEntity userEntity = userDto.toEntity();
+
+        // 관리자 자동 설정 (추가)
+        if ("admin@example.com".equals(userDto.getEmail())) {
+            userEntity.setRole("ADMIN"); // admin@example.com에 자동으로 관리자 권한 부여
+        } else {
+            userEntity.setRole("USER");  // 다른 사용자는 일반 권한
+        }
+
         //3.리포지토리 이용한 entitiy 영속화하기 , 영속된 결과 반환
         UserEntity saveEntity = userEntityRepository.save(userEntity);
         //4.영속된 엔티티의 자동생성된 PK 확인

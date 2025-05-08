@@ -19,7 +19,7 @@ public class UserController {
     public ResponseEntity<String>login(@RequestBody UserDto userDto){
         String token = userService.login(userDto);
         if(token!=null){return ResponseEntity.status(200).body(token);// 만약 토큰이 존재하면 로그인성공
-        } else {return ResponseEntity.status(401).body("로그인성공");} //인증실패 : 401
+        } else {return ResponseEntity.status(401).body("로그인실패");} //인증실패 : 401
 
     }// f end
 

@@ -29,6 +29,7 @@ public class ChallengeDto {
         return ChallengeDto.builder()
                 .cno(challengeEntity.getCno())
                 .content(challengeEntity.getContent())
+                .title(challengeEntity.getTitle())
                 .type(challengeEntity.getType().name())
                 .rewardPoints(challengeEntity.getRewardPoints())
                 .status(challengeEntity.getStatus().name())

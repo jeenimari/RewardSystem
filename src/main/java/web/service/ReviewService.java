@@ -33,13 +33,12 @@ public class ReviewService {
 
     // 1. 리뷰 작성
     public boolean createReview(ReviewDto reviewDto, String userEmail) {
-        // 1. 제품 존재 여부 확인 - 수정: 파라미터 타입이 이미 Integer이므로 변환 불필요
+        // 1. 제품 존재 여부 확인
         Optional<ProductEntity> optionalProduct = productEntityRepository.findById(reviewDto.getProductId());
         if (optionalProduct.isEmpty()) {
             return false; // 제품이 존재하지 않음
         }
         ProductEntity productEntity = optionalProduct.get();
-        // 수정: String 대신 Integer 사용
         Integer productId = productEntity.getId();
 
         // 2. 사용자 존재 여부 확인
@@ -48,10 +47,9 @@ public class ReviewService {
             return false; // 사용자가 존재하지 않음
         }
         UserEntity userEntity = optionalUser.get();
-        String userId = String.valueOf(userEntity.getId());
+        String userId = String.valueOf(userEntity.getId()); // int를 String으로 변환
 
         // 3. 이미 리뷰를 작성했는지 확인
-        // 수정: Integer 타입의 productId 전달
         List<ReviewEntity> existingReviews = reviewRepository.findByUserIdAndProductId(userId, productId);
         if (!existingReviews.isEmpty()) {
             return false; // 이미 리뷰를 작성함
@@ -64,8 +62,7 @@ public class ReviewService {
 
         // 5. 리뷰 엔티티 생성 및 저장
         ReviewEntity reviewEntity = ReviewEntity.builder()
-                .userId(userId)
-                // 수정: Integer 타입 사용
+                .userId(userId) // String 타입 사용
                 .productId(productId)
                 .rcontent(reviewDto.getRContent())
                 .rating(reviewDto.getRating())
@@ -99,9 +96,7 @@ public class ReviewService {
     }
 
     // 2. 제품별 리뷰 목록 조회
-    // 2. 제품별 리뷰 목록 조회
-    public List<ReviewDto> getReviewProduct(Integer productId) { // int에서 Integer로 변경
-        // 수정: 직접 Integer로 전달, String 변환 제거
+    public List<ReviewDto> getReviewProduct(Integer productId) {
         List<ReviewEntity> reviewEntities = reviewRepository.findByProductId(productId);
         return reviewEntities.stream()
                 .map(entity -> {
@@ -109,13 +104,12 @@ public class ReviewService {
 
                     // 추가 정보 설정 (제품명, 사용자명)
                     try {
-                        // 수정: Integer 타입이므로 변환 불필요
                         Optional<ProductEntity> productEntity = productEntityRepository.findById(entity.getProductId());
                         if (productEntity.isPresent()) {
                             dto.setProductName(productEntity.get().getName());
                         }
 
-                        Optional<UserEntity> userEntity = userEntityRepository.findById(Integer.parseInt(entity.getUserId()));
+                        Optional<UserEntity> userEntity = userEntityRepository.findById(Integer.parseInt(entity.getUserId())); // String을 int로 변환
                         if (userEntity.isPresent()) {
                             dto.setUserName(userEntity.get().getUname());
                         }
@@ -135,7 +129,7 @@ public class ReviewService {
             throw new NoSuchElementException("사용자를 찾을 수 없습니다.");
         }
 
-        String userId = String.valueOf(userEntity.get().getId());
+        String userId = String.valueOf(userEntity.get().getId()); // int를 String으로 변환
         List<ReviewEntity> reviewEntities = reviewRepository.findByUserId(userId);
         return reviewEntities.stream()
                 .map(entity -> {
@@ -143,7 +137,6 @@ public class ReviewService {
 
                     // 추가 정보 설정 (제품명)
                     try {
-                        // 수정: Integer 타입이므로 변환 불필요
                         Optional<ProductEntity> productEntity = productEntityRepository.findById(entity.getProductId());
                         if (productEntity.isPresent()) {
                             dto.setProductName(productEntity.get().getName());
@@ -173,8 +166,8 @@ public class ReviewService {
             return false; // 사용자가 존재하지 않음
         }
 
-        String userId = String.valueOf(optionalUser.get().getId());
-        if (!reviewEntity.getUserId().equals(userId)) {
+        String userId = String.valueOf(optionalUser.get().getId()); // int를 String으로 변환
+        if (!reviewEntity.getUserId().equals(userId)) { // String 비교를 위해 equals 사용
             return false; // 본인 리뷰가 아님
         }
 
@@ -189,7 +182,6 @@ public class ReviewService {
         reviewRepository.save(reviewEntity);
 
         // 제품 정보 조회 (이미지 저장용)
-        // 수정: Integer 타입이므로 변환 불필요
         Optional<ProductEntity> optionalProduct = productEntityRepository.findById(reviewEntity.getProductId());
         if (optionalProduct.isEmpty()) {
             return false;
@@ -217,7 +209,7 @@ public class ReviewService {
         return true;
     }
 
-    // 5. 리뷰 삭제 (수정사항 없음)
+    // 5. 리뷰 삭제
     public boolean deleteReview(int reviewId, String userEmail) {
         // 리뷰 존재 여부 확인
         Optional<ReviewEntity> optionalReview = reviewRepository.findById(reviewId);
@@ -233,8 +225,8 @@ public class ReviewService {
             return false; // 사용자가 존재하지 않음
         }
 
-        String userId = String.valueOf(optionalUser.get().getId());
-        if (!reviewEntity.getUserId().equals(userId)) {
+        String userId = String.valueOf(optionalUser.get().getId()); // int를 String으로 변환
+        if (!reviewEntity.getUserId().equals(userId)) { // String 비교를 위해 equals 사용
             return false; // 본인 리뷰가 아님
         }
 
@@ -243,7 +235,7 @@ public class ReviewService {
         return true;
     }
 
-    // 6. 리워드 지급 처리 메서드 (수정사항 없음)
+    // 6. 리워드 지급 처리 메서드
     public boolean processReviewReward(int reviewId) {
         Optional<ReviewEntity> optionalReview = reviewRepository.findById(reviewId);
         if (optionalReview.isEmpty()) {

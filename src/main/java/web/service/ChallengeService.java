@@ -9,7 +9,7 @@ import web.model.entity.ChallengeEntity;
 import web.model.entity.UserChallengeEntity;
 import web.model.entity.UserEntity;
 import web.model.repository.ChallengeEntityRepository;
-import web.model.repository.UserChallnegeRepository;
+import web.model.repository.UserChallengeRepository;
 import web.model.repository.UserEntityRepository;
 import web.util.JwtUtil;
 
@@ -24,7 +24,7 @@ public class ChallengeService {
 
     private final ChallengeEntityRepository challengeEntityRepository; //챌린지 정보 crud
     private final UserEntityRepository userEntityRepository; //사용자 정보 crud
-    private final UserChallnegeRepository userChallnegeRepository; //사용자-챌린지 연결 정보 crud
+    private final UserChallengeRepository userChallengeRepository; //사용자-챌린지 연결 정보 crud
     private final JwtUtil jwtUtil;  //jwt 토큰처리 유틸리티
 
 
@@ -63,7 +63,7 @@ public class ChallengeService {
 
         //3.이미 참여 중인지 확인
         Optional<UserChallengeEntity> existingParticipation =
-                userChallnegeRepository.findByUserIdAndChallengeId(userId, cno);
+                userChallengeRepository.findByUserIdAndChallengeId(userId, cno);
 
         if(existingParticipation.isPresent() &&
                 existingParticipation.get().getStatus() == UserChallengeEntity.ChallengeParticipationStatus.IN_PROGRESS){
@@ -80,7 +80,7 @@ public class ChallengeService {
                 .status((UserChallengeEntity.ChallengeParticipationStatus.IN_PROGRESS))
                 .build();
         //5.참여 정보 저장
-        UserChallengeEntity savedEntity = userChallnegeRepository.save(userChallenge);
+        UserChallengeEntity savedEntity = userChallengeRepository.save(userChallenge);
 
         return savedEntity.getId()>0; //저장된 엔티티의 ID가 유효하면 성공
     }
@@ -92,7 +92,7 @@ public class ChallengeService {
 
     public List<ChallengeDto>getUserChallenges(int userid){
         //1.사용자 참여 정보 조회
-        List<UserChallengeEntity>userChallengeEntityList = userChallnegeRepository.findByUserId(userid);
+        List<UserChallengeEntity>userChallengeEntityList = userChallengeRepository.findByUserId(userid);
 
         //2.참여 중인 챌린지 ID 목록 추출
         List<Integer>challengeIds = userChallengeEntityList.stream().map(UserChallengeEntity::getChallengeId).collect(Collectors.toList());

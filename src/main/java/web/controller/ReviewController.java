@@ -31,9 +31,7 @@ public class ReviewController {
 
         try{
             String jwtToken = token;
-            if(token.startsWith("Bearer")){
-                jwtToken = token.substring(7);
-            }     //"Bearer 접두사 제거
+
             //토큰 검증
             userEmail = jwtUtil.validateToken(jwtToken);
             if(userEmail ==null){
@@ -65,12 +63,10 @@ public class ReviewController {
     public ResponseEntity<List<ReviewDto>>getUserReviews(@RequestHeader("Authorization")String token){
         String userEmail;
         try{
-            String jwtToken = token;
-            if(token.startsWith("Bearer")){
-                jwtToken = token.substring(7);
-            }
+
+
             // 토큰 검증
-            userEmail = jwtUtil.validateToken(jwtToken);
+            userEmail = jwtUtil.validateToken(token);
             if (userEmail == null) {
                 return ResponseEntity.status(401).body(null); // 인증 실패
             }
@@ -91,12 +87,9 @@ public class ReviewController {
     ){
         String userEmail;
         try{
-            String jwtToken = token;
-            if(token.startsWith("Bearer")){
-                jwtToken = token.substring(7);
-            }
+
             // 토큰 검증
-            userEmail = jwtUtil.validateToken(jwtToken);
+            userEmail = jwtUtil.validateToken(token);
             if (userEmail == null) {
                 return ResponseEntity.status(401).body(null); // 인증 실패
             }
@@ -109,19 +102,16 @@ public class ReviewController {
     }//f end
 
     //5.리뷰 삭제
-    @DeleteMapping("/{reivewId}")
+    @DeleteMapping("/{reviewId}")
     public ResponseEntity<Boolean>deleteReview(
             @PathVariable int reviewId,
             @RequestHeader("Authorization")String token){
         String userEmail;
         try{
-            String jwtToken = token;
-            if (token.startsWith("Bearer ")) {
-                jwtToken = token.substring(7);
-            }
+
 
             // 토큰 검증
-            userEmail = jwtUtil.validateToken(jwtToken);
+            userEmail = jwtUtil.validateToken(token);
             if (userEmail == null) {
                 return ResponseEntity.status(401).body(false); // 인증 실패
             }

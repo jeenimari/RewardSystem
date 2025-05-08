@@ -33,7 +33,7 @@ public class ReviewDto {
     public static ReviewDto fromEntity(ReviewEntity reviewEntity){
         return ReviewDto.builder()
                 .id(reviewEntity.getId())
-                .userId(reviewEntity.getUserId())
+                .userId(reviewEntity.getUserId()) // String 타입 userId
                 .productId(reviewEntity.getProductId())
                 .rContent(reviewEntity.getRcontent())
                 .rating(reviewEntity.getRating())

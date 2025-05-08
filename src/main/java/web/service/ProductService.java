@@ -109,7 +109,7 @@ public class ProductService {
      * 최근 등록된 제품 목록
      */
     public List<ProductDto> getRecentProducts(int count) {
-        return productEntityRepository.findAll().stream()
+        return productEntityRepository.findAllByOrderByCreateAtDesc().stream()
                 .limit(count)
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
