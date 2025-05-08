@@ -19,7 +19,7 @@ public class ReviewDto {
 
     private int id; // 아이디
     private String userId; //사용자 아이디
-    private String productId; // 제품 아이디
+    private Integer productId; // 제품 아이디
     private String rContent; // 리뷰 내용
     private int rating; //평점
 //    private String createAt; // 작성일
@@ -52,7 +52,7 @@ public class ReviewDto {
                 .id(id)
                 .userId(userId)
                 .productId(productId)
-                .rcontent(productId)
+                .rcontent(rContent)
                 .rating(rating)
                 .rewarded(rewarded)
                 .build();

@@ -16,8 +16,8 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity,Integer> {
     Page<ReviewEntity>findByUserId(String userId, Pageable pageable);
 
     //제품별 리뷰 조회
-    List<ReviewEntity>findByProductId(String productId);
-    Page<ReviewEntity>findByProductId(String productId , Pageable pageable);
+    List<ReviewEntity>findByProductId(Integer  productId);
+    Page<ReviewEntity>findByProductId(Integer  productId , Pageable pageable);
 
 
     //별점별 리뷰 조회
@@ -30,13 +30,12 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity,Integer> {
     Page<ReviewEntity> findByRcontentContaining(String keyword, Pageable pageable);
 
     //사용자별 제품별 리뷰 조회
-    List<ReviewEntity> findByUserIdAndProductId(String userId, String productId);
+    List<ReviewEntity> findByUserIdAndProductId(String userId, Integer productId);
 
     //포인트 지급 여부별 리뷰 조회
     List<ReviewEntity> findByRewarded(Boolean rewarded);
     //제품별 평균 별점 계산
-
-    long countByProductId(String productId);
+    long countByProductId(Integer productId);
 
 
 

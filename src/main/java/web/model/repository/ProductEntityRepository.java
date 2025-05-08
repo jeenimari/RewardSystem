@@ -18,11 +18,11 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity,Int
     List<ProductEntity>findByNameContaining(String keyword);
 
     //인기 제품 TOP10
-    List<ProductEntity>findTop10();
+    List<ProductEntity>findTop10By();
 
 
     //최근 등록 제품
-    List<ProductEntity>findCreated();
+    List<ProductEntity> findAllByOrderByCreateAtDesc();
 
 
 }

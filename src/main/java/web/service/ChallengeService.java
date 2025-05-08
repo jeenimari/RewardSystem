@@ -51,31 +51,33 @@ public class ChallengeService {
     //3.챌린지 참여기능   //오류가 날수 있음 dto와 엔티티 부분을 다시 볼것
     public boolean participateChallenge(int cno, int userId){
         //1.챌린지 존재 여부 확인
-        Optional<ChallengeEntity>optionalChallenge = challengeEntityRepository.findById(cno);
+        Optional<ChallengeEntity> optionalChallenge = challengeEntityRepository.findById(cno);
         if(optionalChallenge.isEmpty()){
             return false;
         }
         //2.사용자 존재 여부 확인
-        Optional<UserEntity>optionalUser = userEntityRepository.findById(userId);
+        Optional<UserEntity> optionalUser = userEntityRepository.findById(userId);
         if(optionalUser.isEmpty()){
             return false;
         }
 
         //3.이미 참여 중인지 확인
-        Optional<UserChallengeEntity>existingParticipation =
-                userChallnegeRepository.findByUserIdAndChallengeId(userId,cno);
+        Optional<UserChallengeEntity> existingParticipation =
+                userChallnegeRepository.findByUserIdAndChallengeId(userId, cno);
 
-        if(existingParticipation.isPresent() && existingParticipation.get().getStatus().equals("in_progress")){
+        if(existingParticipation.isPresent() &&
+                existingParticipation.get().getStatus() == UserChallengeEntity.ChallengeParticipationStatus.IN_PROGRESS){
             //이미 참여중이면 참여 실패
             return false;
         }
+
 
 
         //4.새로운 참여 정보 생성
         UserChallengeEntity userChallenge = UserChallengeEntity.builder()
                 .userId(userId)
                 .challengeId(cno)
-                .status("in_progress")
+                .status((UserChallengeEntity.ChallengeParticipationStatus.IN_PROGRESS))
                 .build();
         //5.참여 정보 저장
         UserChallengeEntity savedEntity = userChallnegeRepository.save(userChallenge);
@@ -109,7 +111,7 @@ public class ChallengeService {
             UserChallengeEntity participation = userChallengeEntityList.stream().filter(uc->uc.getChallengeId() == challengeEntity.getCno()).findFirst().orElse(null);
 
             if(participation != null){
-                dto.setStatus(participation.getStatus());
+                dto.setStatus(participation.getStatus().name());
             }
             return dto;
         })

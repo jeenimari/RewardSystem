@@ -2,17 +2,15 @@ package web.model.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Table(name = "user_challenges")
-@Data
-@Builder
+@Table(name = "user_challenge")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserChallengeEntity extends BaseTime {
 
     @Id
@@ -26,6 +24,29 @@ public class UserChallengeEntity extends BaseTime {
     private int challengeId;
 
     @Column(nullable = false)
-    private String status; // "in_progress", "completed", "failed" 등의 값
+    private boolean completed;
 
+    @Column(nullable = false)
+    private boolean rewarded;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ChallengeParticipationStatus status;
+
+    // 챌린지 참여 상태를 나타내는 열거형
+    public enum ChallengeParticipationStatus {
+        IN_PROGRESS,    // 진행 중
+        COMPLETED,  // 완료
+        FAILED,     // 실패
+        CANCELLED   // 취소
+    }
+
+    // 선택적: 관계 매핑
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private UserEntity user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "challenge_id", insertable = false, updatable = false)
+    private ChallengeEntity challenge;
 }

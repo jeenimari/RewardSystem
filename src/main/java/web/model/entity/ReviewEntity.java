@@ -23,7 +23,7 @@ public class ReviewEntity extends BaseTime {
     private String userId;
 
     @Column(name = "productid", nullable = false, length = 30)
-    private String productId;
+    private Integer productId;
 
     @Column(name = "rcontent", nullable = false, columnDefinition = "TEXT")
     private String rcontent;
@@ -35,5 +35,11 @@ public class ReviewEntity extends BaseTime {
 
     @Column(nullable = false)
     private Boolean rewarded;
+
+
+    // 추가: ProductEntity와의 관계 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productid", referencedColumnName = "id", insertable = false, updatable = false)
+    private ProductEntity product;
 
 }
