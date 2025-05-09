@@ -28,7 +28,6 @@ public class ReviewController {
         System.out.println("token = " + token + ", reviewDto = " + reviewDto);
         //1.현재 토큰의 작성자 구하기
         String userEmail;
-
         try{
             String jwtToken = token;
 
@@ -46,7 +45,8 @@ public class ReviewController {
             }
 
         }catch (Exception e){
-            return ResponseEntity.status(401).body(false);//인증실패
+            System.out.println("e = " + e);
+            return ResponseEntity.status(500).body(false);//인증실패
         }
     }
 
@@ -79,7 +79,7 @@ public class ReviewController {
     }//f end
 
     //4.리뷰 수정
-    @PutMapping("/{reviewID}")
+    @PutMapping("/{reviewId}")
     public ResponseEntity<Boolean>updateReview(
             @PathVariable int reviewId,
             @RequestHeader("Authorization")String token,

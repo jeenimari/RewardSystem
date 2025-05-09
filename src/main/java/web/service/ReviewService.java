@@ -35,6 +35,7 @@ public class ReviewService {
     public boolean createReview(ReviewDto reviewDto, String userEmail) {
         // 1. 제품 존재 여부 확인
         Optional<ProductEntity> optionalProduct = productEntityRepository.findById(reviewDto.getProductId());
+        System.out.println("optionalProduct = " + optionalProduct);
         if (optionalProduct.isEmpty()) {
             return false; // 제품이 존재하지 않음
         }
@@ -64,7 +65,7 @@ public class ReviewService {
         ReviewEntity reviewEntity = ReviewEntity.builder()
                 .userId(userId) // String 타입 사용
                 .productId(productId)
-                .rcontent(reviewDto.getRContent())
+                .rcontent(reviewDto.getRcontent())
                 .rating(reviewDto.getRating())
                 .rewarded(false) // 초기에는 리워드 미지급 상태
                 .build();
@@ -177,7 +178,7 @@ public class ReviewService {
         }
 
         // 리뷰 내용 업데이트
-        reviewEntity.setRcontent(reviewDto.getRContent());
+        reviewEntity.setRcontent(reviewDto.getRcontent());
         reviewEntity.setRating(reviewDto.getRating());
         reviewRepository.save(reviewEntity);
 
@@ -226,6 +227,9 @@ public class ReviewService {
         }
 
         String userId = String.valueOf(optionalUser.get().getId()); // int를 String으로 변환
+        System.out.println("userId = " + userId);
+        System.out.println(reviewEntity.getUserId());
+
         if (!reviewEntity.getUserId().equals(userId)) { // String 비교를 위해 equals 사용
             return false; // 본인 리뷰가 아님
         }
